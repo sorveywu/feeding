@@ -13,8 +13,8 @@ const Login: FC = () => {
       customClass='nav-bar'
       titleClass='nav-bar-text'
     />
-    <View className='btn-wrap'>
-      <van-button color='#756bff' block openType='getUserInfo' bindGetUserInfo={bindGetUserInfo}>点击登录</van-button>
+    <View className='btn-wrap' style=' box-sizing: border-box; position: absolute; width: 100%; bottom: 0;'>
+      <van-button color='#756bff' block openType='getUserInfo' onGetUserInfo={bindGetUserInfo}>点击登录</van-button>
     </View>
   </View>
 }

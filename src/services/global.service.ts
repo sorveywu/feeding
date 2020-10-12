@@ -3,8 +3,9 @@ import Request from '../utils/request';
 import amapConfig from '../configs/amap.config';
 
 const { apiKey } = amapConfig;
-const apiHost = 'https://restapi.amap.com/v3';
+const amapApiHost = 'https://restapi.amap.com/v3';
 
+// 微信登录获取code
 export const login = async () => {
   try {
     const res = await Taro.login()
@@ -17,13 +18,24 @@ export const login = async () => {
   }
 }
 
+// 获取用户信息
 export const getUserInfo = async () => {
   try {
     const res = await Taro.getUserInfo();
-    console.log(res)
+    if (res && res.errMsg === 'getUserInfo:ok') {
+      return {
+        success: true,
+        userInfo: res.userInfo
+      }
+    } else {
+      return {
+        success: false
+      }
+    }
   } catch (e) {
-    console.log(123)
-    return null;
+    return {
+      success: false
+    };
   }
 }
 
@@ -41,12 +53,14 @@ export const getLocation = async () => {
   }
 }
 
-export const getCityCode = (lat, lng) => Request.exec({
+// 获取高德城市编码
+export const getCityCode = (lat: number, lng: number) => Request.exec({
   type: 'GET',
-  url: `${apiHost}/geocode/regeo?location=${lng},${lat}&key=${apiKey}`
+  url: `${amapApiHost}/geocode/regeo?location=${lng},${lat}&key=${apiKey}`
 })
 
-export const getWeather = cityCode => Request.exec({
+// 获取高德天气
+export const getWeather = (cityCode: number) => Request.exec({
   type: 'GET',
-  url: `${apiHost}/weather/weatherInfo?city=${cityCode}&key=${apiKey}`
+  url: `${amapApiHost}/weather/weatherInfo?city=${cityCode}&key=${apiKey}`
 })

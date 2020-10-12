@@ -8,9 +8,23 @@ import { weatherDataFormat } from '../utils/weatherDataFormat';
 const setLocation = createAction(ActionTypes.SET_LOCATION);
 const setWeather = createAction(ActionTypes.SET_WEATHER);
 
+// 用户登录
 export const login = () => async () => {
-  // const res = await globalApi.login();
-  const res = await globalApi.getUserInfo();
+  const code = await globalApi.login();
+  if (code) {
+    const { success, userInfo: data } = await globalApi.getUserInfo();
+    if (success) {
+      const userInfo = {
+        ...data,
+        code
+      }
+      console.log(userInfo)
+    } else {
+      Taro.showToast({ title: '获取用户信息失败', icon: 'none' });
+    }
+  } else {
+    Taro.showToast({ title: '获取用户信息失败', icon: 'none' });
+  }
 }
 
 // 获取当前经纬度
