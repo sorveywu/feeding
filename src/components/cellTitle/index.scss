@@ -1,0 +1,11 @@
+.cell-title-container{
+  width: 100%;
+  color: #969799;
+  font-size: 28px;
+  line-height: 32px;
+  padding: 20px 24px 16px 24px;
+
+  &.wideMode{
+    padding: 20px 0 16px 0;
+  }
+}

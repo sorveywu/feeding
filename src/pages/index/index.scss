@@ -1,4 +1,99 @@
-.index {
-  flex-direction: column;
-  width: 100%;
+@import '../../app.scss';
+
+.header-layout {
+  height: 160px;
+  width: 160px;
+  padding: 20px;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header{
+  height: 160px;
+  border-bottom: 1px solid $borderLight;
+  display: flex;
+  justify-content: space-between;
+
+  & .header-left{ @extend .header-layout; border-right: 1px solid $borderLight;  flex-direction: column;
+    & .date-day{ font-size: 60px; line-height: 1.2;}
+    & .date-month{ font-size: 32px; line-height: 1.2;}
+  }
+
+  & .header-right{ @extend .header-layout; border-left: 1px solid $borderLight; position: relative;
+    & .weather-num{ font-size: 60px; line-height: 1;}
+    & .weather-str{ font-size: 32px; line-height: 1; margin-top: 18px;}
+    & .weather-img{ width: 40px; height: 40px; position: absolute; top: 10px; right: 10px;}
+  }
+
+  & .header-mid{ flex: 1; display: flex; flex-direction: column;
+    & .column{ height: 80px; display: flex; justify-content: space-between; align-items: center; padding: 0 10px;
+      &:nth-child(1) { border-bottom: 1px solid $borderLight;}
+
+      & .column-item{ display: flex; flex: 1; height: 80px; align-items: center; justify-content: space-between; padding: 0 10px;
+        &:nth-child(1){ border-right: 1px solid $borderLight;}
+
+        & text {font-size: 32px;}
+        & .header-icon{ width: 36px; height: 36px; padding: 0 10px;}
+      }
+    }
+  }
+}
+
+.info-wrap {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px;
+  border-bottom: 1px solid $borderLight;
+
+  & .box {
+    width: 225px;
+    height: 150px;
+    color: #ffffff;
+    border-radius: 15px;
+    padding: 10px 20px;
+    box-sizing: border-box;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    text{
+      &.title{ font-size: 28px;}
+      &.tag{ font-size: 24px;}
+      &.time{ font-size: 40px; line-height: 40px;}
+    }
+
+    &.purple {background-color: $purple;}
+    &.orange {background-color: $orange;}
+    &.skyBlue {background-color: $skyBlue;}
+
+    & .icon{ width: 50px; height: 50px; position: absolute; right: 10px; bottom: 10px;}
+  }
+}
+
+
+.flow-item{ padding: 20px; position: relative;
+  & .flow-line{ position: absolute; width: 1px; top: 20px; bottom: -20px; left: 50px; background-color: $borderLight; z-index: 1;}
+  & .flow-header { display: flex; align-items: center; position: relative; z-index: 10;
+    & .flow-icon{ width: 60px; height: 60px; border-radius: 60px; overflow: hidden; background-color: $borderLight; display: flex; align-items: center; justify-content: center;
+      image{ width: 40px; height: 40px;}
+    }
+    & .flow-time{ flex: 1; font-size: 28px; padding-left: 20px;
+      & text:nth-child(1) { font-size: 28px; color: $deep;}
+      & text:nth-child(2) { font-size: 24px; color: $gray;}
+    }
+
+  }
+  & .flow-content { margin-left: 80px; background-color: #ffffff; padding: 20px; font-size: 28px; color: $deep; border-radius: 8px;
+    & .flow-name{ padding: 5px 0;}
+    & .flow-desc{ padding: 5px 0;}
+  }
+}
+
+
+.movable-area { width: 80px; height: 50vh; position: absolute; z-index: 10002; bottom: 20px; right: 20px; pointer-events: none; display: flex; align-items: flex-end;
+  & .movable-view{ width: 80px; height: 80px; background-color: #ffffff; box-shadow: 1px 1px 5px #ccc; pointer-events: auto; border-radius: 50%; position: absolute; left: 0; top: 60vh;}
+  & .movable-icon{ width: 80px; height: 80px;}
 }

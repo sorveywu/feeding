@@ -1,11 +1,15 @@
 import React, { Component } from 'react'
 import { Provider } from 'react-redux'
-
 import configStore from './store'
-
 import './app.scss'
+import storeController from './utils/storeController';
+import DataControl from './utils/DataControl'
+import actions from './actions/actions';
 
 const store = configStore()
+
+storeController.init(store, actions);
+DataControl.init(store, storeController._actions);
 
 class App extends Component {
   componentDidMount () {}

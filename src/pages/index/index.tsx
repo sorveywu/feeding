@@ -1,79 +1,242 @@
-import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { View, Button, Text } from '@tarojs/components'
+import React, { useState, useEffect } from 'react';
+import Taro from '@tarojs/taro';
+import { useSelector } from 'react-redux';
+import { View, Text, Image, ScrollView, MovableArea, MovableView } from '@tarojs/components';
+import { getAge, getDate } from '../../utils/dateFormat';
+import CellTitle from '../../components/cellTitle';
+import DataControl from '../../utils/DataControl';
 
-import { add, minus, asyncAdd } from '../../actions/counter'
+import WeatherComponent from './weather.component';
 
 import './index.scss'
 
-// #region 书写注意
-//
-// 目前 typescript 版本还无法在装饰器模式下将 Props 注入到 Taro.Component 中的 props 属性
-// 需要显示声明 connect 的参数类型并通过 interface 的方式指定 Taro.Component 子类的 props
-// 这样才能完成类型检查和 IDE 的自动提示
-// 使用函数模式则无此限制
-// ref: https://github.com/DefinitelyTyped/DefinitelyTyped/issues/20796
-//
-// #endregion
+import penImg from '../../assets/images/tab/pen.png';
+import naipingImg from '../../assets/images/naiping.png';
+import yingerchuangImg from '../../assets/images/yingerchuang_o.png';
+import zhiniaokuImg from '../../assets/images/zhiniaoku_o.png';
+import tiwenImg from '../../assets/images/wenduji.png';
+import boyImg from '../../assets/images/boy.png';
+import yaoImg from '../../assets/images/yao.png';
+import tizhongImg from '../../assets/images/tizhong.png';
 
-type PageStateProps = {
-  counter: {
-    num: number
-  }
-}
 
-type PageDispatchProps = {
-  add: () => void
-  dec: () => void
-  asyncAdd: () => any
-}
 
-type PageOwnProps = {}
+const IndexPage = () => {
+  const { month, date } = getDate();
+  const age = getAge('2020-07-23');
 
-type PageState = {}
+  useEffect(() => {
+    DataControl.actions.getWeather();
+  }, []);
 
-type IProps = PageStateProps & PageDispatchProps & PageOwnProps
-
-interface Index {
-  props: IProps;
-}
-
-@connect(({ counter }) => ({
-  counter
-}), (dispatch) => ({
-  add () {
-    dispatch(add())
-  },
-  dec () {
-    dispatch(minus())
-  },
-  asyncAdd () {
-    dispatch(asyncAdd())
-  }
-}))
-class Index extends Component {
-  componentWillReceiveProps (nextProps) {
-    console.log(this.props, nextProps)
+  const addRecord = () => {
+    Taro.navigateTo({
+      url: '/pages/addRecord/index'
+    })
   }
 
-  componentWillUnmount () { }
-
-  componentDidShow () { }
-
-  componentDidHide () { }
-
-  render () {
-    return (
-      <View className='index'>
-        <Button className='add_btn' onClick={this.props.add}>+</Button>
-        <Button className='dec_btn' onClick={this.props.dec}>-</Button>
-        <Button className='dec_btn' onClick={this.props.asyncAdd}>async</Button>
-        <View><Text>{this.props.counter.num}</Text></View>
-        <View><Text>Hello, World</Text></View>
+  return <View className='container'>
+    <van-nav-bar
+      title='记一笔'
+      customClass='nav-bar'
+      titleClass='nav-bar-text'
+    />
+    <View className='header'>
+      <View className='header-left'>
+        <Text className='date-day'>{date}</Text>
+        <Text className='date-month'>{month}月</Text>
       </View>
-    )
-  }
+      <View className='header-mid'>
+        <View className='column'>
+          <View className='column-item'><Text>{age}</Text><Image className='header-icon' src={boyImg} /></View>
+          <View className='column-item'><Image className='header-icon' src={yaoImg} /><Text>AD</Text></View>
+        </View>
+        <View className='column'>
+          <View className='column-item'><Text>10.5</Text><Image className='header-icon' src={tizhongImg} /></View>
+          <View className='column-item'><Image className='header-icon' src={tiwenImg} /><Text>36.5</Text></View>
+        </View>
+      </View>
+      <View className='header-right'>
+        <WeatherComponent />
+      </View>
+    </View>
+
+    <View className='info-wrap'>
+      <View className='box purple'>
+        <Text>上次喂奶</Text>
+        <Text className='tag'>母乳亲喂</Text>
+        <Text className='time'>15:30</Text>
+        <Image className='icon' src={naipingImg} />
+      </View>
+      <View className='box orange'>
+        <Text>最近睡觉</Text>
+        <Text className='tag'>时长:50min</Text>
+        <Text className='time'>15:30</Text>
+        <Image className='icon' src={yingerchuangImg} />
+      </View>
+      <View className='box skyBlue'>
+        <Text className='title'>尿布更换</Text>
+        <Text className='tag'>大便</Text>
+        <Text className='time'>15:30</Text>
+        <Image className='icon' src={zhiniaokuImg} />
+      </View>
+    </View>
+
+    <CellTitle title='今日记录'></CellTitle>
+
+    <View className='scroll-wrap'>
+      <ScrollView scrollY className='scroll-container'>
+        <View className='flow-item'>
+          <View className='flow-header'>
+            <View className='flow-icon'>
+              <Image src={naipingImg} />
+            </View>
+            <View className='flow-time'>
+              <Text>15分钟前</Text>
+              <Text>(2020-09-30 15:33:11)</Text>
+            </View>
+          </View>
+
+          <View className='flow-content'>
+            <View className='flow-name'><Text>配方奶</Text></View>
+            <View className='flow-desc'><Text>120ml</Text></View>
+          </View>
+
+          <View className='flow-line'></View>
+        </View>
+        <View className='flow-item'>
+          <View className='flow-header'>
+            <View className='flow-icon'>
+              <Image src={naipingImg} />
+            </View>
+            <View className='flow-time'>
+              <Text>15分钟前</Text>
+              <Text>(2020-09-30 15:33:11)</Text>
+            </View>
+          </View>
+
+          <View className='flow-content'>
+            <View className='flow-name'><Text>母乳亲喂</Text></View>
+            <View className='flow-desc'><Text>120ml</Text></View>
+          </View>
+          <View className='flow-line'></View>
+        </View>
+
+        <View className='flow-item'>
+          <View className='flow-header'>
+            <View className='flow-icon'>
+              <Image src={naipingImg} />
+            </View>
+            <View className='flow-time'>
+              <Text>15分钟前</Text>
+              <Text>(2020-09-30 15:33:11)</Text>
+            </View>
+          </View>
+
+          <View className='flow-content'>
+            <View className='flow-name'><Text>小便</Text></View>
+            <View className='flow-desc'><Text>少量</Text></View>
+          </View>
+          <View className='flow-line'></View>
+        </View>
+
+        <View className='flow-item'>
+          <View className='flow-header'>
+            <View className='flow-icon'>
+              <Image src={naipingImg} />
+            </View>
+            <View className='flow-time'>
+              <Text>15分钟前</Text>
+              <Text>(2020-09-30 15:33:11)</Text>
+            </View>
+          </View>
+
+          <View className='flow-content'>
+            <View className='flow-name'><Text>大便</Text></View>
+            <View className='flow-desc'><Text>褐色</Text></View>
+          </View>
+          <View className='flow-line'></View>
+        </View>
+
+        <View className='flow-item'>
+          <View className='flow-header'>
+            <View className='flow-icon'>
+              <Image src={naipingImg} />
+            </View>
+            <View className='flow-time'>
+              <Text>15分钟前</Text>
+              <Text>(2020-09-30 15:33:11)</Text>
+            </View>
+          </View>
+
+          <View className='flow-content'>
+            <View className='flow-name'><Text>第一项</Text></View>
+            <View className='flow-desc'><Text>质量一般</Text></View>
+          </View>
+          <View className='flow-line'></View>
+        </View>
+
+        <View className='flow-item'>
+          <View className='flow-header'>
+            <View className='flow-icon'>
+              <Image src={naipingImg} />
+            </View>
+            <View className='flow-time'>
+              <Text>15分钟前</Text>
+              <Text>(2020-09-30 15:33:11)</Text>
+            </View>
+          </View>
+
+          <View className='flow-content'>
+            <View className='flow-name'><Text>第一项</Text></View>
+            <View className='flow-desc'><Text>质量一般</Text></View>
+          </View>
+          <View className='flow-line'></View>
+        </View>
+
+        <View className='flow-item'>
+          <View className='flow-header'>
+            <View className='flow-icon'>
+              <Image src={naipingImg} />
+            </View>
+            <View className='flow-time'>
+              <Text>15分钟前</Text>
+              <Text>(2020-09-30 15:33:11)</Text>
+            </View>
+          </View>
+
+          <View className='flow-content'>
+            <View className='flow-name'><Text>第一项</Text></View>
+            <View className='flow-desc'><Text>质量一般</Text></View>
+          </View>
+          <View className='flow-line'></View>
+        </View>
+
+        <View className='flow-item'>
+          <View className='flow-header'>
+            <View className='flow-icon'>
+              <Image src={naipingImg} />
+            </View>
+            <View className='flow-time'>
+              <Text>15分钟前</Text>
+              <Text>(2020-09-30 15:33:11)</Text>
+            </View>
+          </View>
+
+          <View className='flow-content'>
+            <View className='flow-name'><Text>第一项</Text></View>
+            <View className='flow-desc'><Text>质量一般</Text></View>
+          </View>
+        </View>
+      </ScrollView>
+    </View>
+
+    <MovableArea className='movable-area'>
+      <MovableView className='movable-view' direction='vertical' style='bottom: 0px; top: none;' onClick={addRecord}>
+        <Image className='movable-icon' src={penImg} />
+      </MovableView>
+    </MovableArea>
+  </View>
 }
 
-export default Index
-
+export default IndexPage;

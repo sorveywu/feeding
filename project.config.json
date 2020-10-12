@@ -2,7 +2,7 @@
   "miniprogramRoot": "./dist",
   "projectname": "feeding",
   "description": "喂养记",
-  "appid": "touristappid",
+  "appid": "wx85dac3713dae2305",
   "setting": {
     "urlCheck": true,
     "es6": false,

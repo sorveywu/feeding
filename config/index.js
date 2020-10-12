@@ -14,6 +14,15 @@ const config = {
   },
   copy: {
     patterns: [
+      { from: 'src/components/vant/wxs', to: 'dist/components/vant/wxs' },
+      { from: 'src/components/vant/common/style', to: 'dist/components/vant/common/style' },
+      { from: 'src/components/vant/common/index.wxss', to: 'dist/components/vant/common/index.wxss' },
+      { from: 'src/components/vant/nav-bar/index.wxs', to: 'dist/components/vant/nav-bar/index.wxs' },
+      { from: 'src/components/vant/field/index.wxs', to: 'dist/components/vant/field/index.wxs' },
+      { from: 'src/components/vant/calendar/index.wxs', to: 'dist/components/vant/calendar/index.wxs' },
+      { from: 'src/components/vant/calendar/utils.wxs', to: 'dist/components/vant/calendar/utils.wxs' },
+      { from: 'src/components/vant/calendar/calendar.wxml', to: 'dist/components/vant/calendar/calendar.wxml' },
+      { from: 'src/components/vant/calendar/components/month/index.wxs', to: 'dist/components/vant/calendar/components/month/index.wxs' },
     ],
     options: {
     }
@@ -24,7 +33,7 @@ const config = {
       pxtransform: {
         enable: true,
         config: {
-
+          selectorBlackList: [/van-/]
         }
       },
       url: {

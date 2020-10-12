@@ -1,0 +1,51 @@
+$dark: #1E2531;
+$deep: #4B4D5E;
+$gray: #9FA2B3;
+$lightGray: #CFD0D9;
+$borderLight: #ebedf0;
+$light: #f9f9f9;
+
+$purple: #756bff;
+$red: #ff4650;
+$orange: #fe9e14;
+$yellow: #ffc249;
+$blue: #3679ff;
+$skyBlue:#83c9ff;
+
+page{
+  --nav-bar-text-color: #ffffff;
+  --nav-bar-icon-color: #ffffff;
+}
+
+
+.container {
+  color: $dark;
+  background: #F7F8FB;
+  position: relative;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+
+  .btn-wrap{ padding: 20px;}
+}
+
+.flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-box, .avatar{
+  width: 30px;
+  height: 30px;
+}
+
+.van-nav-bar {
+  &.nav-bar {background-image: linear-gradient(to right, #8768ff 0%, #9771f8 100%); color: #ffffff;}
+  & .nav-bar-text{ color: #ffffff;}
+
+}
+.scroll-wrap{ flex: 1; position: relative; width: 100vw;
+  .scroll-container{ position: absolute; top: 0; bottom: 0; left: 0; right: 0;}
+}

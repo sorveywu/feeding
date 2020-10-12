@@ -16,3 +16,20 @@ declare const process: {
     [key: string]: any;
   }
 }
+
+declare namespace JSX {
+  interface IntrinsicElements {
+    'van-dropdown-menu': any;
+    'van-calendar': any;
+    'van-button': any;
+    'van-count-down': any;
+    'van-icon': any;
+    'van-image': any;
+    'van-nav-bar': any;
+    'van-cell': any;
+    'van-cell-group': any;
+    'van-radio': any;
+    'van-radio-group': any;
+    'van-field': any;
+  }
+}
