@@ -1,5 +1,8 @@
+import Taro from "@tarojs/taro";
 import KbsApi from './KbsApi';
 import { baseApiUrl } from '../configs/system.config';
+import DataControl from './DataControl';
+import { removeToken } from './tokenUtil';
 
 const checkError = () => null;
 
@@ -23,6 +26,25 @@ class Request {
     if (!this.KbsApi) {
       this.KbsApi = new KbsApi(baseApiUrl);
     }
+
+    // 非20x错误的特殊处理
+    opt.errorHandler = res => {
+      const {code} = res;
+      // 登录失效
+      if(code === 401) {
+        setTimeout(() => {
+          Taro.showToast({
+            title: '登录失效，请重新登录',
+            icon: "none",
+            duration: 1239,
+          });
+        }, 1000)
+        removeToken();
+        DataControl.goLogin();
+        return true;
+      }
+      return false
+    };
 
     return this.KbsApi.exec(opt, checkError, showBusy, disabledErrTip);
   }

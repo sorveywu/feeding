@@ -24,7 +24,6 @@ const generateQueryString = (paramsName, params) => {
 
 // 生成加密后的header
 const generateHeader = async (type, options, params = {}) => {
-  // console.log("generateHeader", type, method, params)
   const optHeaders = options.headers || {}
 
   let paramsName = Object.keys(params);
@@ -44,7 +43,7 @@ const generateHeader = async (type, options, params = {}) => {
   return { headers, queryStr }
 }
 
-// 检测又没哟token
+// 检测有没有token
 const checkToken = () => {
   const accessToken = getToken();
   if (accessToken) {
@@ -67,8 +66,9 @@ export default class KbsApi {
 
     // 是否需要token, 默认true
     let accessToken = checkToken();
+    // 需要登录&&没有token&&不是https开头的请求
     if (withToken && !accessToken && !hasHttp) {
-      DataControl.login();
+      DataControl.goLogin();
       return;
     }
     const tokenParam = withToken ? { Authorization: accessToken } : {}

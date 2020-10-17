@@ -31,7 +31,6 @@ const globalReducer = handleActions({
     }
   },
   [ActionTypes.SET_USERINFO]: (state, action) => {
-    console.log(123123)
     return {
       ...state,
       userInfo: {

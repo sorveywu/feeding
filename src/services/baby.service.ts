@@ -7,3 +7,10 @@ export const addBaby = params => {
     params
   })
 }
+
+export const getBabyList = () => {
+  Request.exec({
+    type: 'POST',
+    url: '/customer/babies'
+  })
+}

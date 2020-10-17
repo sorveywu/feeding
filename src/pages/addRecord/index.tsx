@@ -41,7 +41,6 @@ const AddRecord = () => {
   }
 
   const onConfirm = () => {
-    console.log(123123)
     DataControl.actions.login();
     /* DataControl.actions.addBaby({
       nickname: '闹闹',
