@@ -1,4 +1,6 @@
+import DataControl from './DataControl';
 import fetchWithErrorCode from "./fetchWithErrorCode";
+import { getToken } from './tokenUtil';
 
 // 生成URL参数
 const generateQueryString = (paramsName, params) => {
@@ -21,22 +23,17 @@ const generateQueryString = (paramsName, params) => {
 }
 
 // 生成加密后的header
-const generateHeader = async (type, method, options, params = {}) => {
+const generateHeader = async (type, options, params = {}) => {
   // console.log("generateHeader", type, method, params)
   const optHeaders = options.headers || {}
 
-  // 加密
-  let paramsName = Object.keys(params)
-  paramsName = paramsName.sort()
-
-  let queryStr = ''
-
-  if (type === 'POST') {
-
-  } else {
+  let paramsName = Object.keys(params);
+  let queryStr = '';
+  paramsName = paramsName.sort();
+  if (type !== 'POST') {
     queryStr = generateQueryString(paramsName, params)
   }
-  // console.log('signStr', `${signStr}|`);
+
   const headers = {
     ...optHeaders,
     Accept: '*/*',
@@ -47,6 +44,14 @@ const generateHeader = async (type, method, options, params = {}) => {
   return { headers, queryStr }
 }
 
+// 检测又没哟token
+const checkToken = () => {
+  const accessToken = getToken();
+  if (accessToken) {
+    return accessToken;
+  }
+  return false;
+}
 
 export default class KbsApi {
   baseUrl: any;
@@ -55,9 +60,18 @@ export default class KbsApi {
   }
 
   async exec(opt, checkError, showBusy, disableErrTip) {
-    const { url: method, type, params } = opt;
-    const url = method.startsWith('http') ? method : this.baseUrl + method;
-    const { headers, queryStr } = await generateHeader(type, method, opt, params);
+    const { url: method, type, params, withToken = true } = opt;
+    const hasHttp = method.startsWith('http');
+    const url = hasHttp ? method : this.baseUrl + method;
+    const { headers, queryStr } = await generateHeader(type, opt, params);
+
+    // 是否需要token, 默认true
+    let accessToken = checkToken();
+    if (withToken && !accessToken && !hasHttp) {
+      DataControl.login();
+      return;
+    }
+    const tokenParam = withToken ? { Authorization: accessToken } : {}
 
     const res = await fetchWithErrorCode(
       queryStr ? `${url}?${queryStr}` : url,
@@ -65,6 +79,7 @@ export default class KbsApi {
         method: type,
         headers: {
           ...headers,
+          ...tokenParam,
           ...opt.headers
         },
         body: type === 'POST' ? JSON.stringify(opt.params) : null

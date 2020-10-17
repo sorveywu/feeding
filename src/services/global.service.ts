@@ -18,14 +18,21 @@ export const login = async () => {
   }
 }
 
+type props = {
+  success: boolean,
+  userInfo?: any
+}
 // 获取用户信息
-export const getUserInfo = async () => {
+export const getUserInfo = async (): Promise<props> => {
   try {
     const res = await Taro.getUserInfo();
     if (res && res.errMsg === 'getUserInfo:ok') {
       return {
         success: true,
-        userInfo: res.userInfo
+        userInfo: {
+          ...res.userInfo,
+          rawData: res.rawData
+        }
       }
     } else {
       return {
@@ -38,6 +45,14 @@ export const getUserInfo = async () => {
     };
   }
 }
+
+// 从服务获取token
+export const getToken = params => Request.exec({
+  type: 'POST',
+  url: `/wxAuth/login`,
+  withToken: false,
+  params
+})
 
 // 获取经纬度
 export const getLocation = async () => {

@@ -86,7 +86,7 @@ const fetchWithErrorCode = async (
           icon: "none",
           duration: 1239,
         });
-      }, 1000);
+      }, 309);
     }
     throw err;
   } else {

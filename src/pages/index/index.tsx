@@ -5,7 +5,7 @@ import { View, Text, Image, ScrollView, MovableArea, MovableView } from '@tarojs
 import { getAge, getDate } from '../../utils/dateFormat';
 import CellTitle from '../../components/cellTitle';
 import DataControl from '../../utils/DataControl';
-
+import { getToken } from '../../utils/tokenUtil';
 import WeatherComponent from './weather.component';
 
 import './index.scss'
@@ -19,13 +19,16 @@ import boyImg from '../../assets/images/boy.png';
 import yaoImg from '../../assets/images/yao.png';
 import tizhongImg from '../../assets/images/tizhong.png';
 
-
-
 const IndexPage = () => {
   const { month, date } = getDate();
   const age = getAge('2020-07-23');
 
   useEffect(() => {
+    const token = getToken();
+    if (!token) {
+      DataControl.goLogin();
+      return;
+    }
     DataControl.actions.getWeather();
   }, []);
 

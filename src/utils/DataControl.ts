@@ -1,3 +1,5 @@
+import Taro from '@tarojs/taro';
+
 let _instance: any;
 
 class DataControl {
@@ -53,6 +55,20 @@ class DataControl {
 
   getValue(key) {
     return this._values[key];
+  }
+
+  // 去登录
+  goLogin() {
+    Taro.reLaunch({
+      url: '/pages/login/index'
+    })
+  }
+
+  // 跳转到首页
+  goHomePage() {
+    Taro.reLaunch({
+      url: '/pages/addRecord/index'
+    })
   }
 }
 

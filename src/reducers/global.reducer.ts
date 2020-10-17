@@ -3,7 +3,8 @@ import { ActionTypes } from '../actions/actionTypes';
 
 const initialState = {
   location: null,
-  weather: null
+  weather: null,
+  userInfo: {}
 }
 
 const globalReducer = handleActions({
@@ -25,6 +26,15 @@ const globalReducer = handleActions({
     return {
       ...state,
       weather: {
+        ...action.payload
+      }
+    }
+  },
+  [ActionTypes.SET_USERINFO]: (state, action) => {
+    console.log(123123)
+    return {
+      ...state,
+      userInfo: {
         ...action.payload
       }
     }

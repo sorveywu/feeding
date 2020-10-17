@@ -3,8 +3,11 @@ import { View } from '@tarojs/components';
 import DataControl from '../../utils/DataControl';
 
 const Login: FC = () => {
-  const bindGetUserInfo = () => {
-    DataControl.actions.login();
+  const bindGetUserInfo = async () => {
+    const { success } = await DataControl.actions.login();
+    if (success) {
+      DataControl.goHomePage();
+    }
   }
 
   return <View className='container'>

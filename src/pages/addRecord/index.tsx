@@ -1,6 +1,5 @@
-import React, { Fragment, useEffect, useState } from 'react';
-import { View, Text, ScrollView } from '@tarojs/components';
-import dayjs from 'dayjs';
+import React, { useState } from 'react';
+import { View, ScrollView } from '@tarojs/components';
 import DataControl from '../../utils/DataControl';
 import CellTitle from '../../components/cellTitle';
 
@@ -28,9 +27,6 @@ const AddRecord = () => {
   }
 
   const [data, setData] = useState(initialData);
-
-  useEffect(() => {
-  }, []);
 
   const onChange = e => {
     const { name } = e.currentTarget.dataset;
