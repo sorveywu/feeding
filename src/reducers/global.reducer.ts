@@ -4,7 +4,7 @@ import { ActionTypes } from '../actions/actionTypes';
 const initialState = {
   location: null,
   weather: null,
-  userInfo: {}
+  userInfo: null
 }
 
 const globalReducer = handleActions({

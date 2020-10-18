@@ -22,6 +22,7 @@ import tizhongImg from '../../assets/images/tizhong.png';
 const IndexPage = () => {
   const { month, date } = getDate();
   const age = getAge('2020-07-23');
+  const userInfo = useSelector(({ global }) => global.userInfo);
 
   useEffect(() => {
     const token = getToken();
@@ -30,7 +31,23 @@ const IndexPage = () => {
       return;
     }
     DataControl.actions.getWeather();
+    DataControl.actions.init();
   }, []);
+
+  useEffect(() => {
+    if (userInfo) {
+      const { currentBaby } = userInfo;
+      if (currentBaby === 0) {
+        Taro.showModal({
+          content: '您还没有添加宝宝，赶紧添加您的宝宝吧',
+          showCancel: false,
+          success: () => {
+            Taro.navigateTo({ url: '/pages/addRecord/index' })
+          }
+        })
+      }
+    }
+  }, [userInfo]);
 
   const addRecord = () => {
     Taro.navigateTo({

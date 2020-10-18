@@ -18,7 +18,7 @@ export const login = async () => {
   }
 }
 
-type props = {
+interface props {
   success: boolean,
   userInfo?: any
 }
@@ -78,4 +78,10 @@ export const getCityCode = (lat: number, lng: number) => Request.exec({
 export const getWeather = (cityCode: number) => Request.exec({
   type: 'GET',
   url: `${amapApiHost}/weather/weatherInfo?city=${cityCode}&key=${apiKey}`
+})
+
+// 获取基本信息
+export const init = () => Request.exec({
+  type: 'GET',
+  url: '/customer/init'
 })

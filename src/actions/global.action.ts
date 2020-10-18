@@ -22,9 +22,7 @@ export const login = () => async dispatch => {
       }
       const res = await globalApi.getToken(params);
       if (res && res.errorCode === 0) {
-        const { accessToken, userInfo: userData } = res.data;
-        // 更新用户信息
-        dispatch(setUserInfo(userData));
+        const { accessToken } = res.data;
         // 储存accessToken
         saveAccessToken(accessToken);
         return { success: true };
@@ -34,6 +32,16 @@ export const login = () => async dispatch => {
   }
   Taro.showToast({ title: '获取用户信息失败', icon: 'none' });
   return { success: false };
+}
+
+export const init = () => async dispatch => {
+  const res = await globalApi.init();
+  if (res && res.errorCode === 0) {
+    // 更新用户信息
+    dispatch(setUserInfo(res.data));
+  } else {
+    Taro.showToast({ title: res.message, icon: 'none' });
+  }
 }
 
 // 获取当前经纬度

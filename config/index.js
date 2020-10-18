@@ -20,6 +20,7 @@ const config = {
       { from: 'src/components/vant/nav-bar/index.wxs', to: 'dist/components/vant/nav-bar/index.wxs' },
       { from: 'src/components/vant/field/index.wxs', to: 'dist/components/vant/field/index.wxs' },
       { from: 'src/components/vant/calendar/index.wxs', to: 'dist/components/vant/calendar/index.wxs' },
+      { from: 'src/components/vant/picker-column/index.wxs', to: 'dist/components/vant/picker-column/index.wxs' },
       { from: 'src/components/vant/calendar/utils.wxs', to: 'dist/components/vant/calendar/utils.wxs' },
       { from: 'src/components/vant/calendar/calendar.wxml', to: 'dist/components/vant/calendar/calendar.wxml' },
       { from: 'src/components/vant/calendar/components/month/index.wxs', to: 'dist/components/vant/calendar/components/month/index.wxs' },

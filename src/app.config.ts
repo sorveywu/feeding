@@ -3,6 +3,7 @@ export default {
     'pages/index/index',
     'pages/login/index',
     'pages/setting/index',
+    'pages/addBaby/index',
     'pages/addRecord/index'
   ],
   tabBar: {

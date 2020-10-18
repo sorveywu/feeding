@@ -31,5 +31,10 @@ declare namespace JSX {
     'van-radio': any;
     'van-radio-group': any;
     'van-field': any;
+    'van-dialog': any;
+    'van-switch': any;
+    'van-notify': any;
+    'van-datetime-picker': any;
+    'van-popup': any;
   }
 }

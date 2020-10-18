@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Taro from '@tarojs/taro';
 import { View, ScrollView } from '@tarojs/components';
 import DataControl from '../../utils/DataControl';
 import CellTitle from '../../components/cellTitle';
@@ -48,14 +49,18 @@ const AddRecord = () => {
     }); */
   }
 
+  const handleBack = () => {
+    Taro.navigateBack();
+  }
+
   return <View className='container'>
     <van-nav-bar
-      leftArrow
-      leftText='返回'
       title='每日记录'
       customClass='nav-bar'
       titleClass='nav-bar-text'
-    />
+    >
+      <van-icon name='arrow-left' slot='left' onClick={handleBack} />
+    </van-nav-bar>
     <View className='scroll-wrap'>
       <ScrollView className='scroll-container middle'>
         <View className='cell-wrap'>
