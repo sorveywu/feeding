@@ -7,8 +7,6 @@ import Notify from '../../components/vant/notify/notify';
 import './index.scss';
 import { SafeAreaHeight } from '../../constants/constant';
 
-console.log(SafeAreaHeight)
-
 enum dataMap {
   nickname = '宝宝昵称',
   birthday = '宝宝生日',

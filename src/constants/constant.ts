@@ -13,5 +13,4 @@ export enum MedicineType {
 }
 
 const { safeArea } = Taro.getSystemInfoSync();
-
 export const SafeAreaHeight = safeArea.bottom - safeArea.height;

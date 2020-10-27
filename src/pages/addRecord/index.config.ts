@@ -13,6 +13,7 @@ export default {
     "van-icon": "../../components/vant/icon/index",
     "van-radio": "../../components/vant/radio/index",
     "van-radio-group": "../../components/vant/radio-group/index",
+    "van-notify": "../../components/vant/notify/index",
     "van-field": "../../components/vant/field/index"
   }
 }

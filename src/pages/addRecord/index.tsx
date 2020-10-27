@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import Taro from '@tarojs/taro';
 import { View, ScrollView } from '@tarojs/components';
+import Notify from '../../components/vant/notify/notify';
 import DataControl from '../../utils/DataControl';
 import CellTitle from '../../components/cellTitle';
+import dayjs from 'dayjs'
 
 import './index.scss';
 
@@ -13,17 +15,21 @@ enum MedicineType {
 }
 
 interface formData {
-  height: string;
-  weight: string;
-  temperature: string;
+  type: number,
+  recordAt: string,
+  height: number;
+  weight: number;
+  temperature: number;
   medicine: MedicineType;
 }
 
 const AddRecord = () => {
   const initialData: formData = {
-    height: '',
-    weight: '',
-    temperature: '',
+    recordAt: dayjs().format(),
+    type: 10,
+    height: 0,
+    weight: 0,
+    temperature: 0,
     medicine: MedicineType.D3
   }
 
@@ -31,7 +37,7 @@ const AddRecord = () => {
 
   const onChange = e => {
     const { name } = e.currentTarget.dataset;
-    data[name] = e.detail;
+    data[name] = +e.detail;
     setData({ ...data });
   }
 
@@ -42,11 +48,7 @@ const AddRecord = () => {
   }
 
   const onConfirm = () => {
-    DataControl.actions.login();
-    /* DataControl.actions.addBaby({
-      nickname: '闹闹',
-      birthday: dayjs('2020-07-23')
-    }); */
+    DataControl.actions.addRecord(data);
   }
 
   const handleBack = () => {
@@ -100,11 +102,11 @@ const AddRecord = () => {
             </van-cell-group>
           </van-radio-group>
         </View>
-        <View className='btn-wrap'>
-          <van-button color='#756bff' block openType='getUserInfo' onClick={onConfirm}>单色按钮</van-button>
-        </View>
       </ScrollView >
     </View >
+    <View className='btn-wrap'>
+      <van-button color='#756bff' block openType='getUserInfo' onClick={onConfirm}>保存</van-button>
+    </View>
   </View >
 }
 
