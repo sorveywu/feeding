@@ -4,6 +4,7 @@ import { ActionTypes } from '../actions/actionTypes';
 const initialState = {
   daily: null,
   today: [],  // 今天的记录列表
+  latest: []
 }
 
 const recordReducer = handleActions({
@@ -16,6 +17,15 @@ const recordReducer = handleActions({
       daily: {
         ...action.payload
       }
+    }
+  },
+  [ActionTypes.SET_LATEST]: (state, action) => {
+    if (action.error || !action.payload) {
+      return state;
+    }
+    return {
+      ...state,
+      latest: action.payload
     }
   }
 }, initialState)

@@ -7,13 +7,12 @@ import CellTitle from '../../components/cellTitle';
 import DataControl from '../../utils/DataControl';
 import { getToken } from '../../utils/tokenUtil';
 import WeatherComponent from './weather.component';
+import LatestComp from './latest/index';
 
 import './index.scss'
 
 import penImg from '../../assets/images/tab/pen.png';
 import naipingImg from '../../assets/images/naiping.png';
-import yingerchuangImg from '../../assets/images/yingerchuang_o.png';
-import zhiniaokuImg from '../../assets/images/zhiniaoku_o.png';
 import tiwenImg from '../../assets/images/wenduji.png';
 import boyImg from '../../assets/images/boy.png';
 import yaoImg from '../../assets/images/yao.png';
@@ -25,6 +24,7 @@ const IndexPage = () => {
   const currentBabyId = useSelector(({ global }) => global.currentBabyId);
   const userInfo = useSelector(({ global }) => global.userInfo);
   const daily = useSelector(({ record }) => record.daily);
+
   const { birthday } = currentBaby || {}
   let age: number | string = '--';
   birthday && (age = getAge(birthday));
@@ -40,6 +40,7 @@ const IndexPage = () => {
       await DataControl.actions.init();
       await DataControl.actions.getDaily();
       await DataControl.actions.getRecordOfToday();
+      await DataControl.actions.getLatestRecord();
     }
     fetchData()
   }, []);
@@ -90,26 +91,7 @@ const IndexPage = () => {
       </View>
     </View>
 
-    <View className='info-wrap'>
-      <View className='box purple'>
-        <Text>上次喂奶</Text>
-        <Text className='tag'>母乳亲喂</Text>
-        <Text className='time'>15:30</Text>
-        <Image className='icon' src={naipingImg} />
-      </View>
-      <View className='box orange'>
-        <Text>最近睡觉</Text>
-        <Text className='tag'>时长:50min</Text>
-        <Text className='time'>15:30</Text>
-        <Image className='icon' src={yingerchuangImg} />
-      </View>
-      <View className='box skyBlue'>
-        <Text className='title'>尿布更换</Text>
-        <Text className='tag'>大便</Text>
-        <Text className='time'>15:30</Text>
-        <Image className='icon' src={zhiniaokuImg} />
-      </View>
-    </View>
+    <LatestComp />
 
     <CellTitle title='今日记录'></CellTitle>
 

@@ -12,4 +12,5 @@ export const ActionTypes = {
 
   // 记录相关
   SET_DAILY: 'SET_DAILY',
+  SET_LATEST: 'SET_LATEST',
 }

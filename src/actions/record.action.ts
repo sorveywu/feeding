@@ -6,6 +6,7 @@ import { ActionTypes } from '../actions/actionTypes';
 import * as recordApi from '../services/record.service';
 
 const setDaily = createAction(ActionTypes.SET_DAILY);
+const setLatest = createAction(ActionTypes.SET_LATEST);
 
 // 获取每天日常记录的数据
 export const getDaily = () => async dispatch => {
@@ -32,4 +33,12 @@ export const getRecordOfToday = () => async dispatch => {
     day
   }
   const res = await recordApi.getAllRecord(params);
+}
+
+// 获取最新的尿布、睡觉、喂奶记录
+export const getLatestRecord = () => async dispatch => {
+  const res = await recordApi.getLatestRecord();
+  if (res && res.errorCode === 0) {
+    dispatch(setLatest(res.data));
+  }
 }

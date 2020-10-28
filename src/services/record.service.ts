@@ -17,3 +17,8 @@ export const getAllRecord = params => Request.exec({
   url: '/record/all',
   params
 })
+
+export const getLatestRecord = () => Request.exec({
+  type: 'GET',
+  url: '/record/latest'
+})
