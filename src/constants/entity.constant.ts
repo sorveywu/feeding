@@ -9,7 +9,8 @@ export enum RecordType {
   Nurse = 6,  // 喂奶
   Drink = 7, // 喝水
   Foods = 8,  // 辅食
-  Sleep = 9   // 睡眠
+  Sleep = 9,   // 睡眠
+  Daily = 10   // 日常
 }
 // 换尿布类别
 export enum DiaperType {

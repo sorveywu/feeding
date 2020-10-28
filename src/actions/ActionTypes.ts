@@ -9,4 +9,7 @@ export const ActionTypes = {
 
   // 宝宝相关
   ADD_BABY: 'ADD_BABY',
+
+  // 记录相关
+  SET_DAILY: 'SET_DAILY',
 }

@@ -21,8 +21,13 @@ import tizhongImg from '../../assets/images/tizhong.png';
 
 const IndexPage = () => {
   const { month, date } = getDate();
-  const age = getAge('2020-07-23');
+  const currentBaby = useSelector(({ global }) => global.currentBaby);
+  const currentBabyId = useSelector(({ global }) => global.currentBabyId);
   const userInfo = useSelector(({ global }) => global.userInfo);
+  const daily = useSelector(({ record }) => record.daily);
+  const { birthday } = currentBaby || {}
+  let age: number | string = '--';
+  birthday && (age = getAge(birthday));
 
   useEffect(() => {
     const token = getToken();
@@ -30,28 +35,32 @@ const IndexPage = () => {
       DataControl.goLogin();
       return;
     }
-    DataControl.actions.getWeather();
-    DataControl.actions.init();
+    const fetchData = async () => {
+      await DataControl.actions.getWeather();
+      await DataControl.actions.init();
+      await DataControl.actions.getDaily();
+      await DataControl.actions.getRecordOfToday();
+    }
+    fetchData()
   }, []);
 
   useEffect(() => {
     if (userInfo) {
-      const { currentBaby } = userInfo;
-      if (currentBaby === 0) {
+      if (!currentBabyId) {
         Taro.showModal({
           content: '您还没有添加宝宝，赶紧添加您的宝宝吧',
           showCancel: false,
           success: () => {
-            Taro.navigateTo({ url: '/pages/addRecord/index' })
+            Taro.navigateTo({ url: '/pages/index/index' })
           }
         })
       }
     }
-  }, [userInfo]);
+  }, [currentBabyId, userInfo]);
 
-  const addRecord = () => {
+  const addDailyRecord = () => {
     Taro.navigateTo({
-      url: '/pages/addRecord/index'
+      url: '/pages/addDaily/index'
     })
   }
 
@@ -61,7 +70,7 @@ const IndexPage = () => {
       customClass='nav-bar'
       titleClass='nav-bar-text'
     />
-    <View className='header'>
+    <View className='header' onClick={addDailyRecord}>
       <View className='header-left'>
         <Text className='date-day'>{date}</Text>
         <Text className='date-month'>{month}月</Text>
@@ -72,8 +81,8 @@ const IndexPage = () => {
           <View className='column-item'><Image className='header-icon' src={yaoImg} /><Text>AD</Text></View>
         </View>
         <View className='column'>
-          <View className='column-item'><Text>10.5</Text><Image className='header-icon' src={tizhongImg} /></View>
-          <View className='column-item'><Image className='header-icon' src={tiwenImg} /><Text>36.5</Text></View>
+          <View className='column-item'><Text>{daily ? daily.weight : '--'}</Text><Image className='header-icon' src={tizhongImg} /></View>
+          <View className='column-item'><Image className='header-icon' src={tiwenImg} /><Text>{daily ? daily.temperature : '--'}</Text></View>
         </View>
       </View>
       <View className='header-right'>
@@ -252,7 +261,7 @@ const IndexPage = () => {
     </View>
 
     <MovableArea className='movable-area'>
-      <MovableView className='movable-view' direction='vertical' style='bottom: 0px; top: none;' onClick={addRecord}>
+      <MovableView className='movable-view' direction='vertical' style='bottom: 0px; top: none;'>
         <Image className='movable-icon' src={penImg} />
       </MovableView>
     </MovableArea>

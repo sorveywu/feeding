@@ -1,16 +1,12 @@
 import Request from '../utils/request';
 
-export const addBaby = params => {
-  Request.exec({
-    type: 'POST',
-    url: `/baby/add`,
-    params
-  })
-}
+export const addBaby = params => Request.exec({
+  type: 'POST',
+  url: `/baby/add`,
+  params
+})
 
-export const getBabyList = () => {
-  Request.exec({
-    type: 'POST',
-    url: '/customer/babies'
-  })
-}
+export const getBabyList = () => Request.exec({
+  type: 'POST',
+  url: '/customer/babies'
+})

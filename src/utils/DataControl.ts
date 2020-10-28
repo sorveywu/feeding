@@ -67,7 +67,7 @@ class DataControl {
   // 跳转到首页
   goHomePage() {
     Taro.reLaunch({
-      url: '/pages/addRecord/index'
+      url: '/pages/index/index'
     })
   }
 }
