@@ -6,11 +6,5 @@ export enum Gender {
   Female = 2, // 女
 }
 
-export enum MedicineType {
-  NONE = 0,
-  AD = 1,
-  D3 = 2,
-}
-
 const { safeArea } = Taro.getSystemInfoSync();
 export const SafeAreaHeight = safeArea.bottom - safeArea.height;

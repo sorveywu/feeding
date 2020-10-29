@@ -2,8 +2,7 @@ import Taro from '@tarojs/taro';
 import Request from '../utils/request';
 import amapConfig from '../configs/amap.config';
 
-const { apiKey } = amapConfig;
-const amapApiHost = 'https://restapi.amap.com/v3';
+const { apiHost: amapApiHost, apiKey } = amapConfig;
 
 // 微信登录获取code
 export const login = async () => {

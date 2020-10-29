@@ -2,9 +2,6 @@ export default {
   pages: [
     'pages/index/index',
     'pages/login/index',
-    'pages/setting/index',
-    'pages/addBaby/index',
-    'pages/addDaily/index'
   ],
   /* tabBar: {
     list: [{
